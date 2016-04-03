@@ -1,0 +1,575 @@
+*{
+    box-sizing: border-box;/*reset page*/
+}
+a{
+	color:inherit;
+	text-decoration: none;
+}
+body {
+	margin: 0;/*reset page*/
+	text-transform: uppercase;
+	font-family: "Arial Rounded MT Bold", "Arial";
+	overflow: hidden;
+}
+#playing-field{
+	position: absolute;
+	width:100%;
+	height:100vh;
+	background-image: url(http://res.cloudinary.com/dmj8qtant/image/upload/v1459018757/parts/palacebg.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.vert-centered{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+/* Cards */
+.card, #pile, #deck{
+	transition: all 0.3s ease;
+
+	position: relative;
+	height:300px;
+	width:200px;
+	background:#fff;
+	border-radius: 5px;
+	padding:10px;
+	margin:10px;
+
+	display: flex;
+	flex-direction: column;
+}
+/* upper half of card */
+.card > div:first-child{
+}
+/* the middle part of card */
+.center-stuff{
+	height:80%;
+	width:100px;
+}
+/* center smaller numbers of stuff */
+.center-stuff > div{
+	width:100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+/* make singletons centered */
+.center-stuff .card-suit{
+	margin: auto;
+}
+/* lower half of card */
+.card > div:last-child{
+	position: absolute;
+	bottom:10px;
+	right:10px;
+	transform: rotateZ(180deg)
+}
+/* number font, default black */
+.card-value{
+	width: 48px;
+	text-align: center;
+	font-size: 2em;
+	color:#222;
+}
+/* base pic is 48 x 48 */
+.card-suit{
+	background-repeat: no-repeat;
+	height:48px;
+	width: 48px;
+}
+.card-face{
+	width: 100%;
+	height:160px;
+	opacity:0.8;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center;
+}
+@media screen and (max-width: 1600px) {
+	.card, #pile, #deck{
+		height:200px;
+		width:135px;
+	}
+	/* upper half of card */
+	.card > div:first-child{
+	}
+	/* the middle part of card */
+	.center-stuff{
+		height:80%;
+		width:100px;
+	}
+	/* center smaller numbers of stuff */
+	.center-stuff > div{
+		margin-top: 15px;
+		margin-left: 15px;
+		width:75%;
+		display: flex;
+		flex-wrap: wrap;
+	}
+	/* make singletons centered */
+	.center-stuff .card-suit{
+		margin: auto;
+	}
+	/* lower half of card */
+	.card > div:last-child{
+		display: none;
+	}
+	/* number font, default black */
+	.card-value{
+		width: 32px;
+		text-align: center;
+		font-size: 2em;
+		color:#222;
+	}
+	/* base pic is 48 x 48 */
+	.card-suit{
+		background-repeat: no-repeat;
+		background-size: cover;
+		height:32px;
+		width: 32px;
+	}
+}
+@media screen and (max-width: 1000px) {
+	.card, #pile, #deck {
+		height:150px;
+		width:100px;
+	}
+	/* upper half of card */
+	.card > div:first-child{
+	}
+	/* the middle part of card */
+	.center-stuff{
+		display: none;
+	}
+	/* lower half of card */
+	.card > div:last-child{
+		display: none;
+	}
+	/* number font, default black */
+	.card-value{
+		width: 48px;
+		text-align: center;
+		font-size: 2em;
+		color:#222;
+	}
+	/* base pic is 48 x 48 */
+	.card-suit{
+		background-repeat: no-repeat;
+		height:48px;
+		width: 48px;
+	}
+}
+/*  Mini Cards for How-To and Pile   */
+	.card-mini {
+		transition: all 0.3s ease;
+
+		position: relative;
+		height:150px;
+		width:100px;
+		background:#fff;
+		border-radius: 5px;
+		padding:10px;
+		margin:10px;
+
+		display: flex;
+		flex-direction: column;
+	}
+	/* number font, default black */
+	.card-mini .card-value{
+		width: 48px;
+		text-align: center;
+		font-size: 2em;
+		color:#222;
+	}
+	/* base pic is 48 x 48 */
+	.card-mini .card-suit{
+		background-repeat: no-repeat;
+		height:48px;
+		width: 48px;
+	}
+/* center area */
+#whose-turn{
+	transition: all 0.5s ease;
+	font-size: 2em;
+	opacity: 0.9;
+	text-align: center;
+}
+#whose-turn > div{
+	width: 20%;
+	margin: auto;
+}
+#whose-turn .btn{
+	font-size: 1rem;
+	margin-bottom: 10px;
+}
+#center-area, #whose-turn, .player-area, .btn{
+	color:gold;
+}
+#center-area > div{
+	transition: all 0.2s ease;
+}
+#center-area > div:last-child{
+	display: flex;
+	flex-direction: row;
+}
+.btn{
+	transition: all 0.5s ease;
+	border: 1px solid #dce;
+	padding:10px;
+	text-align: center;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+.btn:hover{
+ 	box-shadow: 0px 0px 10px rgba(200,200,200,0.5);
+ 	text-shadow: 0px 0px 10px rgba(200,200,100,0.5);
+}
+.btn:disabled{
+	opacity: 0.5;
+	cursor: default;
+}
+.btn:disabled:hover{
+}
+/* pile */
+/* shows on no card */
+#pile, #deck, .big-box {
+	border: 1px solid #dce;
+}
+#pile > div, #pile .card{
+	position: absolute;
+	top:0;
+	left:0;
+	margin: 0;
+}
+.ng-enter{
+	opacity: 0;
+	transform: scale(1.2);
+}
+.ng-enter.ng-enter-active {
+	opacity: 1;
+	transform: scale(1);
+}
+
+@keyframes pileBlowUp
+{
+0% {transform:translateX(12px);}
+10% {transform:translateX(-12px);}
+30% {transform:translateX(12px);}
+60% {transform:translateX(-12px);}
+100% {transform:translateX(12px);}
+}
+
+@-webkit-keyframes pileBlowUp /* Safari and Chrome */
+{
+0% {transform:translateX(12px);}
+10% {transform:translateX(-12px);}
+30% {transform:translateX(12px);}
+60% {transform:translateX(-12px);}
+100% {transform:translateX(12px);}
+}
+/* pile and tutorial box */
+.big-box{
+	position: absolute;
+	height:80%;
+	width:80%;
+	padding-left:40px;
+	padding-right:40px;
+	z-index: 200;
+}
+.big-box h1{
+	text-align: center;
+	color:#fff;
+}
+#pile-list > div{
+	display: flex;
+	flex-wrap: wrap;
+	border-top: 1px solid #dce;
+}
+#tutorial{
+	text-transform: none;
+	color:#fff;
+}
+#tutorial section{
+	line-height: 2.2em;
+}
+#tutorial b{
+	margin-left: 20px;
+	font-size: 1.25em;
+}
+#tutorial span{
+	vertical-align: text-bottom;
+	font-size:1.75em;
+}
+.card-rep{
+	position: relative;
+	display: inline-block;
+	background-color: #fff;
+	width: 1.25em;
+	border-radius: 5px;
+}
+/* half styled chars */
+.halfStyle, .halfStyle10 {
+    position:relative;
+    display:inline-block;
+    font-size:1.75em; /* or any font size will work */
+    color: transparent; /* hide the base character */
+    overflow:hidden;
+    white-space: pre; /* to preserve the spaces from collapsing */
+}
+.halfStyle:before { /* creates the top part */
+    display:block;
+    z-index:2;
+    position:absolute;
+    top:0;
+    height: 50%;
+    content: attr(data-content); /* dynamic content for the pseudo element */
+    overflow:hidden;
+    pointer-events: none; /* so the base char is selectable by mouse */
+    color: #d00; /* red */
+	
+	transform: translateX(50%);
+}
+.halfStyle:after { /* creates the bottom part */
+    display:block;
+    position:absolute;
+    z-index:1;
+    top:0;
+    height: 100%;
+    content: attr(data-content); /* dynamic content for the pseudo element */
+    overflow:hidden;
+    pointer-events: none; /* so the base char is selectable by mouse */
+    color: #222; /* black */
+	
+	transform: translateX(50%);
+}
+.halfStyle10:before { /* creates the top part */
+    display:block;
+    z-index:2;
+    position:absolute;
+    top:0;
+    height: 50%;
+    content: attr(data-content); /* dynamic content for the pseudo element */
+    overflow:hidden;
+    pointer-events: none; /* so the base char is selectable by mouse */
+    color: #d00; /* red */
+}
+.halfStyle10:after { /* creates the bottom part */
+    display:block;
+    position:absolute;
+    z-index:1;
+    top:0;
+    height: 100%;
+    content: attr(data-content); /* dynamic content for the pseudo element */
+    overflow:hidden;
+    pointer-events: none; /* so the base char is selectable by mouse */
+    color: #222; /* black */
+}
+/**/
+/*----------*/
+/*-X-*/
+/*----------*/
+a:hover{
+    text-decoration: none;
+}
+a.boxclose{
+    position: absolute;
+	top:0;
+	right:15px;
+
+    cursor:pointer;
+    color: #ffffff;
+    font-size: 3.5rem;
+    font-weight: bold;
+	z-index: 9;
+}
+.boxclose:before{
+    content: "×";
+}
+/* X */
+/* deck placeholder positioning */
+#deck > div {
+	position: absolute;
+	left:-1px;
+	top:-1px;
+	margin: 0;
+}
+/* card behind */
+#deck > div , .flipped-card {
+	background-image: url(img/rose.svg);
+	background-size: 60%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color:#4a4;
+	border:20px solid #255525;
+}
+
+@keyframes drawToPlayer1
+{
+0% {left:-1px;top:-1px;}
+100% {left:-500px;top:-500px;opacity: 0;}
+}
+
+@-webkit-keyframes drawToPlayer1 /* Safari and Chrome */
+{
+0% {left:-1px;top:-1px;}
+100% {left:-500px;top:-500px;opacity: 0;}
+}
+@keyframes drawToPlayer2
+{
+0% {left:-1px;top:-1px;}
+100% {left:500px;top:-500px;opacity: 0;}
+}
+
+@-webkit-keyframes drawToPlayer2 /* Safari and Chrome */
+{
+0% {left:-1px;top:-1px;}
+100% {left:500px;top:-500px;opacity: 0;}
+}
+
+@keyframes drawToPlayer3
+{
+0% {left:-1px;top:-1px;}
+100% {left:500px;top:500px;opacity: 0;}
+}
+
+@-webkit-keyframes drawToPlayer3 /* Safari and Chrome */
+{
+0% {left:-1px;top:-1px;}
+100% {left:500px;top:500px;opacity: 0;}
+}
+
+@keyframes drawToPlayer4
+{
+0% {left:-1px;top:-1px;}
+100% {left:-500px;top:500px;opacity: 0;}
+}
+
+@-webkit-keyframes drawToPlayer4 /* Safari and Chrome */
+{
+0% {left:-1px;top:-1px;}
+100% {left:-500px;top:500px;opacity: 0;}
+}
+/* playing area */
+.player-area, .btn, .big-box {
+	border-radius:10px;
+}
+#pile, #deck, .player-area, .btn, .big-box {
+	background-color: rgba(50,50,50,0.7);
+}
+.player-area{
+	transition: all 0.5s ease;
+	position: absolute;
+	min-width:25%;
+	min-height:25%;
+}
+.player-area span{
+	font-size: 2em;
+	opacity:0.5;
+	position: absolute;
+}
+#player1-area{
+	top:0;
+	left:0;
+	padding-bottom: 10px;
+	border-right:1px solid gold;
+	border-bottom:1px solid gold;
+}
+#player2-area{
+	top:0;
+	right:0;
+	padding-bottom: 10px;
+	border-left:1px solid gold;
+	border-bottom:1px solid gold;
+}
+#player3-area{
+	right:0;
+	bottom:0;
+	border-left:1px solid gold;
+	border-top:1px solid gold;
+}
+#player4-area{
+	left:0;
+	bottom:0;
+	border-right:1px solid gold;
+	border-top:1px solid gold;
+}
+#player1-area span{
+	bottom:-1.25em;
+	left:0;
+}
+#player2-area span{
+	bottom:-1.25em;
+	right:0;
+}
+#player3-area span{
+	top:-1.25em;
+	right:0;
+}
+#player4-area span{
+	top:-1.25em;
+	left:0;
+}
+#click-guard {
+	position: absolute;
+	z-index: 100;
+	width: 100%;
+	height:100%;
+}
+.palace-guard {
+	position: absolute;
+	z-index: 99;
+	width: 100%;
+	height:100%;
+}
+.secret-guard {
+	position: absolute;
+	z-index: 25;
+	width: 100%;
+	height:100%;
+}
+.secret-palace, .upper-palace {
+	display: flex;
+	flex-direction: row;
+}
+.upper-palace{
+	position: absolute;
+	top:10px;
+	left:10px;
+	z-index:49;
+}
+.upper-palace .card{
+	box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+}
+/* hand */
+#player-hand{
+	transition:all 0.2s ease;
+
+	position: fixed;
+	bottom:0;
+	left:50%;
+	transform: translateX(-50%);
+	z-index: 99;
+}
+#player-hand #bg{
+	position: absolute;
+	width:100%;
+	height:100%;
+	background-color: #000;
+	filter: blur(25px);
+	opacity: 0.5;
+}
+#hand{
+	transition: all 0.5s ease;
+		
+	display: flex;
+	flex-direction: row;
+}
+#hand .card, .secret-palace .card, .upper-palace .card, #pile .card{
+	cursor: pointer;
+}
+#hand .card:hover, .secret-palace .card:hover, .upper-palace .card:hover, #pile .card:hover{
+	box-shadow: 0px 0px 25px rgba(155,255,255,0.8);
+}
