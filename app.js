@@ -623,7 +623,7 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 										var beatsEnemy = $scope.playable.slice($scope.playable.indexOf(enemyHighest)+1);
 
 										$scope.cardsToPlay.value = handValues.reduce(function(curr,next){
-											if(handValues.indexOf(curr) > handValues.indexOf(next) && $scope.beatsEnemy.indexOf(next)!==-1){
+											if(handValues.indexOf(curr) > handValues.indexOf(next) && beatsEnemy.indexOf(next)!==-1){
 												curr = next;
 											}
 											return curr;
