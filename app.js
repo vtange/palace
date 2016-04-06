@@ -607,14 +607,30 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 								},preferredValues[preferredValues.length-1]);
 
 							}
-							// else, check the player's upper palace for highest value, trim it with $scope playables.
+							//else
 							else{
-								if(dickmode){						
+								if($scope[players[playerAfter]].upp_palace.length){
+									//if player is on upper palace
 									var enemyHighest = $scope[players[playerAfter]].upp_palace.reduce(function(curr,next){
+										if(curr.value<next.value){
+											curr = next;
+										}
+										return curr;
+									},{value:0}).value;
+									if(!isMagicOrAce(enemyHighest)&&$scope.playable.indexOf(enemyHighest)){
+										//if enemy highest is a king or worse, play the weakest card that is playable && beats enemyHighest.
 
-									});
-									if(handValues.indexOf(enemyHighest)){
-										handValues = handValues.slice(handValues.indexOf(enemyHighest));
+										var beatsEnemy = $scope.playable.slice($scope.playable.indexOf(enemyHighest)+1);
+
+										$scope.cardsToPlay.value = handValues.reduce(function(curr,next){
+											if(handValues.indexOf(curr) > handValues.indexOf(next) && $scope.beatsEnemy.indexOf(next)!==-1){
+												curr = next;
+											}
+											return curr;
+										},handValues[handValues.length-1]);
+									}
+									else{
+										//nothing happens, play as usual
 									}
 								}
 								else{
