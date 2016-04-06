@@ -490,6 +490,8 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 	//FOR AI: general AI Turn sequence
 	$scope.AITurn = function(player,mustBeat){
 		
+				var playerAfter = $scope.nextPlayer + 1 >= players.length ? 0 : $scope.nextPlayer + 1;
+
 				//swapMode promise
 				var swapMode = $q.defer();
 	
@@ -569,18 +571,53 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 					}
 					//hand has different cards, more than one card
 					else{
-
 						//sort handValues from weakest to greatest
 						handValues = handValues.sort(sortHand);
 
-						//cycle handValues from left to right, find weakest playable value. and set to cardstoplay.value
-						$scope.cardsToPlay.value = handValues.reduce(function(curr,next){
-							if(handValues.indexOf(curr) > handValues.indexOf(next) && $scope.playable.indexOf(next)!==-1){
-								curr = next;
-							}
-							return curr;
-						},handValues[handValues.length-1]);
+						//if player after doesn't have a hand, 
+						if ($scope[players[playerAfter]].hand.length<1){
+							// if player after is on final card
+							if($scope[players[playerAfter]].sec_palace.length<2){
 
+								//drop 10 since blowing up clears way for player after
+								
+								//if no 9, J, Q, K,  drop 8 to prevent suicide
+								
+								
+								//cycle handValues from left to right, find strongest playable value. and set to cardstoplay.value
+								$scope.cardsToPlay.value = handValues.reduce(function(curr,next){
+									if(handValues.indexOf(curr) < handValues.indexOf(next) && $scope.playable.indexOf(next)!==-1){
+										curr = next;
+									}
+									return curr;
+								},handValues[handValues.length-1]);
+
+							}
+							// else, check the player's upper palace for highest value, trim it with $scope playables.
+							else{
+								if(dickmode){						
+									var enemyHighest = $scope[players[playerAfter]].upp_palace.reduce(function(curr,next){
+
+									});
+									if(handValues.indexOf(enemyHighest)){
+										handValues = handValues.slice(handValues.indexOf(enemyHighest));
+									}
+								}
+								else{
+									//nothing happens, play as usual
+								}
+							}
+						}
+						//if current selected value is unplayable, default to regular search
+						if($scope.playable.indexOf($scope.cardsToPlay.value)===-1){
+							//cycle handValues from left to right, find weakest playable value. and set to cardstoplay.value
+							$scope.cardsToPlay.value = handValues.reduce(function(curr,next){
+								if(handValues.indexOf(curr) > handValues.indexOf(next) && $scope.playable.indexOf(next)!==-1){
+									curr = next;
+								}
+								return curr;
+							},handValues[handValues.length-1]);
+						}
 						//INTEL
 						//console.log(player.name+", hand: "+handValues);
 						//console.log("playable: "+$scope.playable);
