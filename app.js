@@ -580,17 +580,31 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 							if($scope[players[playerAfter]].sec_palace.length<2){
 
 								//drop 10 since blowing up clears way for player after
-								
-								//if no 9, J, Q, K,  drop 8 to prevent suicide
-								
-								
+								var preferredValues = handValues.filter(function(number){
+									return number !== 10;
+								});
+								//if you have a K, or 1, drop 7, since 13 or 1 is better
+								if(preferredValues.indexOf(1)!==-1||preferredValues.indexOf(13)!==-1){
+									preferredValues = preferredValues.filter(function(number){
+										return number !== 7;
+									});
+								}
+								//if no 9, J, Q, K, 1  drop 8 to prevent suicide
+								if(preferredValues.filter(function(number){
+									return [9,11,12,13,1,7,8,2,10].indexOf(number)!==-1;
+								}).length<1){
+									preferredValues = preferredValues.filter(function(number){
+										return number !== 8;
+									});
+								}
+
 								//cycle handValues from left to right, find strongest playable value. and set to cardstoplay.value
-								$scope.cardsToPlay.value = handValues.reduce(function(curr,next){
-									if(handValues.indexOf(curr) < handValues.indexOf(next) && $scope.playable.indexOf(next)!==-1){
+								$scope.cardsToPlay.value = preferredValues.reduce(function(curr,next){
+									if(preferredValues.indexOf(curr) < preferredValues.indexOf(next) && $scope.playable.indexOf(next)!==-1){
 										curr = next;
 									}
 									return curr;
-								},handValues[handValues.length-1]);
+								},preferredValues[preferredValues.length-1]);
 
 							}
 							// else, check the player's upper palace for highest value, trim it with $scope playables.
