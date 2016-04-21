@@ -24,10 +24,10 @@ app.factory('DATASTORE', function(){
 	storage.makeDeck = function(){
 		var deck = [];
 		var id = 1;
-		let suits = ["spades","hearts","clubs","diamonds"];
+		var suits = ["spades","hearts","clubs","diamonds"];
 
 		suits.forEach(function(suit){
-			for(let i=1;i<14;i++){
+			for(var i=1;i<14;i++){
 				deck.push({
 					id:id,
 					suit:suit,
