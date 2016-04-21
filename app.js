@@ -1,6 +1,6 @@
-(function() {
-    //start of function
-  var app = angular.module('palace-game', ['ngAnimate']);
+"use strict";
+
+var app = angular.module('palace-game', ['ngAnimate']);
 
 app.factory('DATASTORE', function(){
 
@@ -1150,6 +1150,3 @@ Array.prototype.getFirstElementThat = function(test) {
     }
 	return null;
 }
-
-  //end of function
-})();
