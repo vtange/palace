@@ -134,8 +134,8 @@ body {
 }
 @media screen and (max-width: 1000px) {
 	.card, #pile, #deck {
-		height:150px;
-		width:100px;
+		height:105px;
+		width:70px;
 	}
 	/* upper half of card */
 	.card > div:first-child{
@@ -150,16 +150,16 @@ body {
 	}
 	/* number font, default black */
 	.card-value{
-		width: 48px;
+		width: 36px;
 		text-align: center;
-		font-size: 2em;
+		font-size: 1.5em;
 		color:#222;
 	}
 	/* base pic is 48 x 48 */
 	.card-suit{
 		background-repeat: no-repeat;
-		height:48px;
-		width: 48px;
+		height:36px;
+		width: 36px;
 	}
 }
 /*  Mini Cards for How-To and Pile   */
@@ -405,7 +405,28 @@ a.boxclose{
 	background-color:#4a4;
 	border:20px solid #255525;
 }
-
+@media screen and (max-width: 1000px) {
+	#whose-turn > div{
+		width: 40%;
+	}
+	#deck > div , .flipped-card {
+		border:8px solid #255525;
+	}
+	.card-mini {
+		height:105px;
+		width:70px;
+	}
+	/* number font, default black */
+	.card-mini .card-value{
+		width: 36px;
+		font-size: 1.5em;
+	}
+	/* base pic is 48 x 48 */
+	.card-mini .card-suit{
+		height:36px;
+		width: 36px;
+	}
+}
 @keyframes drawToPlayer1
 {
 0% {left:-1px;top:-1px;}
