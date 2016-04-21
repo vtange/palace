@@ -88,7 +88,7 @@ body {
 	background-size: 100%;
 	background-position: center;
 }
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1920px) {
 	.card, #pile, #deck{
 		height:200px;
 		width:135px;
@@ -132,7 +132,7 @@ body {
 		width: 32px;
 	}
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1280px) {
 	.card, #pile, #deck {
 		height:105px;
 		width:70px;
@@ -405,7 +405,7 @@ a.boxclose{
 	background-color:#4a4;
 	border:20px solid #255525;
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1280px) {
 	#whose-turn > div{
 		width: 40%;
 	}
