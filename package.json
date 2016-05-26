@@ -1,0 +1,24 @@
+{
+  "name": "palace",
+  "version": "0.0.0",
+  "description": "palace card game app",
+  "main": "index.html",
+  "devDependencies": {
+    "karma-coverage": "~0.2.4",
+    "karma-mocha": "~0.1.6",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-sinon-chai": "~0.2.0",
+    "mocha": "~1.20.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "author": "Victor Tang",
+  "license": "ISC",
+  "directories": {
+    "test": "test"
+  }
+}
