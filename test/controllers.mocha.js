@@ -141,6 +141,27 @@ describe('Palace Game: ', function() {
 	});
 
   });
+  describe('Animations', function() {
+
+	beforeEach(function(){
+	})
+	afterEach(function() {
+	});
+
+	it('should highlight selected cards', function() {
+	});
+	it('should dim cards not of similar value to selected card', function() {
+	});
+
+	it('should use drawing animation for deck to simulate drawing', function() {
+	});
+	  
+	it('should use fortfeit animation for pile to simulate picking up the pile', function() {
+	});
+	  
+	it('should use blowUp animation for pile to simulate pile reset (played a 10)', function() {
+	});
+  });
   describe('Gameplay', function() {
 
 	beforeEach(function(){
