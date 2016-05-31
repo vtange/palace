@@ -86,7 +86,61 @@ describe('Palace Game: ', function() {
 		});
 	});
   });
+  describe('Toggles', function() {
 
+	beforeEach(function(){
+	})
+	afterEach(function() {
+	});
+
+	it('should toggle Menu between games', function() {
+		expect(scope.showMenu()['opacity']).to.equal(1);
+		expect(scope.showMenu()['z-index']).to.be.above(1);
+		scope.startGame();
+		expect(scope.showMenu()['opacity']).to.equal(0);
+		expect(scope.showMenu()['z-index']).to.be.below(1);
+	});
+
+	it('should toggle Deck between games', function() {
+		expect(scope.showDeck()['opacity']).to.equal(0);
+		expect(scope.showDeck()['z-index']).to.be.below(1);
+		scope.startGame();
+		expect(scope.showDeck()['opacity']).to.equal(1);
+		expect(scope.showDeck()['z-index']).to.be.above(1);
+	});
+	  
+	it('should only show play area for a player when he/she is ready', function() {
+		var players = ['player1','player2','player3','player4'];
+		players.forEach(function(player){
+			expect(scope.showPlayer(scope[player])['opacity']).to.equal(0);
+			scope[player].ready = true;
+			expect(scope.showPlayer(scope[player])['opacity']).to.equal(1);
+		});
+	});
+
+	it('should only show hand when I say so', function() {
+			expect(scope.showHand()['opacity']).to.equal(0);
+			scope.handOn = true;
+			expect(scope.showHand()['opacity']).to.equal(1);
+	});
+
+	it('should only show the pile when I says so', function() {
+			expect(scope.pileOn).to.equal(false);
+			scope.showPile();
+			expect(scope.pileOn).to.equal(true);
+			scope.showPile();
+			expect(scope.pileOn).to.equal(false);
+	});
+
+	it('should only show the pile when I says so', function() {
+			expect(scope.tutOn).to.equal(false);
+			scope.showTut();
+			expect(scope.tutOn).to.equal(true);
+			scope.showTut();
+			expect(scope.tutOn).to.equal(false);
+	});
+
+  });
   describe('Gameplay', function() {
 
 	beforeEach(function(){
@@ -96,6 +150,13 @@ describe('Palace Game: ', function() {
 
 	it('should have a deck', function() {
 		expect(scope.deck.length).to.not.equal(0);
+	});
+
+	it('should not start game multiple times if I spam start', function() {
+		sinon.stub(scope, 'setupGame', function() {});
+		scope.startGame();
+		scope.startGame();
+		expect(scope.setupGame.callCount).to.equal(1);
 	});
   });
 });
