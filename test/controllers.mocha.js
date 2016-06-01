@@ -154,6 +154,16 @@ describe('Palace Game: ', function() {
 	});
 
 	it('should use drawing animation for deck to simulate drawing', function() {
+		function capitalizeFirstLetter(string) {
+			return string.charAt(0).toUpperCase() + string.slice(1);
+		}
+		var players = ['player1','player2','player3','player4'];
+		players.forEach(function(player){
+			scope[player].isDrawing = true;
+			expect(scope.drawAnims()['animation']).to.equal('drawTo'+capitalizeFirstLetter(player)+' 0.75s');
+			scope[player].isDrawing = false;
+		});
+		expect(scope.drawAnims()['opacity']).to.equal(0);
 	});
 	  
 	it('should use fortfeit animation for pile to simulate picking up the pile', function() {
