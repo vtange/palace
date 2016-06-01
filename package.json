@@ -4,6 +4,8 @@
   "description": "palace card game app",
   "main": "index.html",
   "devDependencies": {
+    "browser-sync": "^2.12.10",
+    "gulp": "^3.9.1",
     "karma-coverage": "~0.2.4",
     "karma-mocha": "~0.1.6",
     "karma-phantomjs-launcher": "^0.1.4",
