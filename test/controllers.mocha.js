@@ -144,15 +144,55 @@ describe('Palace Game: ', function() {
   describe('Animations', function() {
 
 	beforeEach(function(){
+		scope.startGame();
 	})
 	afterEach(function() {
 	});
 
 	it('should highlight selected cards', function() {
+		var card = scope.deck[1];
+		scope.cardsToPlay.cards.push(card);
+		expect(scope.cardAnims(card)['box-shadow']).to.equal('0px 0px 25px rgba(155,255,255,0.8)');
+	});
+	it('should move selected card up', function() {
+		var card = scope.deck[1];
+		scope.cardsToPlay.cards.push(card);
+		expect(scope.cardAnims(card)['transform']).to.equal('translateY(-50px)');
 	});
 	it('should dim cards not of similar value to selected card', function() {
+		var card1 = scope.deck[1];
+		scope.cardsToPlay.cards.push(card1);
+		scope.cardsToPlay.value = card1.value;
+		var card2 = scope.deck.getFirstElementThat(function(card){
+			return card.value !== card1.value;
+		})
+		sinon.stub(scope, 'getCurrentHand', function() {
+			return [card2];
+		});
+		expect(scope.cardAnims(card2)['opacity']).to.equal(0.75);
+		expect(scope.cardAnims(card2)['cursor']).to.equal("default");
 	});
-
+	it('should not dim cards of similar value to selected card', function() {
+		var card1 = scope.deck[1];
+		scope.cardsToPlay.cards.push(card1);
+		scope.cardsToPlay.value = card1.value;
+		var card2 = scope.deck.getFirstElementThat(function(card){
+			return card.value === card1.value && card.id !== card1.id;
+		})
+		sinon.stub(scope, 'getCurrentHand', function() {
+			return [card2];
+		});
+		expect(scope.cardAnims(card2)).to.equal(undefined);
+	});
+	it('should not target cards not on hand/selected', function() {
+		var card1 = scope.deck[1];
+		scope.cardsToPlay.cards.push(card1);
+		scope.cardsToPlay.value = card1.value;
+		var card2 = scope.deck.getFirstElementThat(function(card){
+			return card.value !== card1.value;
+		})
+		expect(scope.cardAnims(card2)).to.equal(undefined);
+	});
 	it('should use drawing animation for deck to simulate drawing', function() {
 		function capitalizeFirstLetter(string) {
 			return string.charAt(0).toUpperCase() + string.slice(1);
