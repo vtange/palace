@@ -260,4 +260,29 @@ describe('Palace Game: ', function() {
 		expect(scope.getCurrentHand()).to.deep.equal([card1]);
 	});
   });
+  describe('Misc functions', function() {
+
+	beforeEach(function(){
+	})
+	afterEach(function() {
+	});
+	it("should know all the ace or magic cards", function() {
+
+	});
+	it("should know all the magic cards", function() {
+		//might not need, can use new Example sort to sort arrays.
+	});
+	it("should sort a hand according the ideal example", function() {
+
+	});
+	it("should know when the whole hand is the same card value", function() {
+		
+	});
+	it("should return null array (Array prototype getFirstElementThat )", function() {
+		expect([1,2,3].getFirstElementThat(function(value){
+			return value === 4;
+		})).to.equal(null);
+	});
+
+  });
 });
