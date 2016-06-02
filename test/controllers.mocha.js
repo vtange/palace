@@ -243,5 +243,21 @@ describe('Palace Game: ', function() {
 		scope.startGame();
 		expect(scope.setupGame.callCount).to.equal(1);
 	});
+	  
+	it("should be Player 1's turn", function() {
+		expect(scope.getCurrentPlayer()).to.equal(scope.player1);
+	});
+
+	it("should not be showing anyone's hand without handOn", function() {
+		expect(scope.getCurrentHand()).to.deep.equal([]);
+	});
+
+	it("should show Player1's hand", function() {
+		scope.startGame();
+		var card1 = scope.deck[1];
+		scope.handOn = true;
+		scope.player1.hand = [card1]
+		expect(scope.getCurrentHand()).to.deep.equal([card1]);
+	});
   });
 });
