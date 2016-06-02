@@ -207,9 +207,23 @@ describe('Palace Game: ', function() {
 	});
 	  
 	it('should use fortfeit animation for pile to simulate picking up the pile', function() {
+		function capitalizeFirstLetter(string) {
+			return string.charAt(0).toUpperCase() + string.slice(1);
+		}
+		var players = ['player1','player2','player3','player4'];
+		players.forEach(function(player){
+			scope[player].forfeiting = true;
+			expect(scope.forfAnims()['animation']).to.equal('drawTo'+capitalizeFirstLetter(player)+' 0.75s');
+			scope[player].forfeiting = false;
+		});
+		expect(scope.forfAnims()).to.deep.equal({});
 	});
 	  
 	it('should use blowUp animation for pile to simulate pile reset (played a 10)', function() {
+		scope.blowUp = true;
+		expect(scope.blowUpAnim()['animation']).to.equal('pileBlowUp 0.75s');
+		scope.blowUp = false;
+		expect(scope.blowUpAnim()).to.deep.equal({});
 	});
   });
   describe('Gameplay', function() {
