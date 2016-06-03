@@ -210,6 +210,9 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 	/* ---------- */
 	/* GAME STATE */
 	/* ---------- */
+	//controls sort function
+	$scope.weakToStrong = [3,4,5,6,9,11,12,13,1,7,8,2,10];
+	
 	//controls if "PALACE (Play)" is shown or deck
 	$scope.playingGame = false;
 
@@ -267,43 +270,8 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 			return card.id;
 		});
 	};
-	
-	function isMagicOrAce(n){
+	$scope.isMagicOrAce = function(n){
 		return n === 1 || n === 2 || n === 7 || n === 8 || n === 10;
-	};
-
-	function isMagic(n){
-		return n === 2 || n === 7 || n === 8 || n === 10;
-	};
-
-	function sortHand(a,b){
-		// 1, 7, 8, 2, 10 in front
-		if(isMagicOrAce(a)){
-			//magics infront of 1
-			if(isMagic(b)){
-				//move 2 over 7 and 8
-				if(a===2){
-					if(b===7||b===8){
-						return 1;
-					}
-					else{
-						return -1;
-					}
-				}
-				else{
-					return -1;
-				}
-			}
-			else{
-				return 1;
-			}
-		}
-		else{
-			if(isMagicOrAce(b)){
-				return -1;
-			}
-			return a > b;
-		}
 	};
 
 	//clean slate for game
@@ -572,7 +540,7 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 					//hand has different cards, more than one card
 					else{
 						//sort handValues from weakest to greatest
-						handValues = handValues.sort(sortHand);
+						handValues = handValues.exampleSort($scope.weakToStrong);
 
 						//if player after doesn't have a hand, 
 						if ($scope[players[playerAfter]].hand.length<1){
@@ -617,7 +585,7 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 										}
 										return curr;
 									},{value:0}).value;
-									if(!isMagicOrAce(enemyHighest)&&$scope.playable.indexOf(enemyHighest)){
+									if(!$scope.isMagicOrAce(enemyHighest)&&$scope.playable.indexOf(enemyHighest)){
 										//if enemy highest is a king or worse, play the weakest card that is playable && beats enemyHighest.
 
 										var beatsEnemy = $scope.playable.slice($scope.playable.indexOf(enemyHighest)+1);
@@ -680,7 +648,7 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 	$scope.selectCards = function(player){
 		//cycle hand or upper palace
 		// if cardstoplay.value is 1,2,7,8,10, just find one card to play
-		if(isMagicOrAce($scope.cardsToPlay.value)){
+		if($scope.isMagicOrAce($scope.cardsToPlay.value)){
 			if(player.hand.length < 1){
 				$scope.cardsToPlay.cards.push(player.upp_palace.getFirstElementThat(function(card){
 					return card.value === $scope.cardsToPlay.value;
@@ -894,7 +862,7 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 					});
 
 					//sort
-					values = values.sort(sortHand);
+					values = values.exampleSort($scope.weakToStrong);
 					//for each in handValues top 3, find a card in currhand with that value and push it to upp palace.
 					values.slice(3).forEach(function(value){
 
@@ -1128,6 +1096,10 @@ app.directive('ngSideScroll', function() {
             });
         };
 });
+
+Array.prototype.exampleSort = function(exampleArr){
+  return this.sort(function(x,y){ return exampleArr.indexOf(x) - exampleArr.indexOf(y)});
+}
 
 Array.prototype.allValuesSame = function() {
 

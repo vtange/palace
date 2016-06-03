@@ -267,16 +267,28 @@ describe('Palace Game: ', function() {
 	afterEach(function() {
 	});
 	it("should know all the ace or magic cards", function() {
-
-	});
-	it("should know all the magic cards", function() {
-		//might not need, can use new Example sort to sort arrays.
+		var aces = [1,2,7,8,10];
+		aces.forEach(function(value){
+			expect(scope.isMagicOrAce(value)).to.equal(true);
+		});
 	});
 	it("should sort a hand according the ideal example", function() {
-
+		var order = [3,4,5,6,9,11,12,13,1,7,8,2,10];
+		var hand1 = [2,2,2,2];
+		var hand2 = [1,7,12,2];
+		var hand3 = [10,7,4,3];
+		expect(order.exampleSort(order)).to.deep.equal(order);
+		expect(hand1.exampleSort(order)).to.deep.equal(hand1);
+		expect(hand2.exampleSort(order)).to.deep.equal([12,1,7,2]);
+		expect(hand3.exampleSort(order)).to.deep.equal([3,4,7,10]);
 	});
 	it("should know when the whole hand is the same card value", function() {
-		
+		var hand1 = [2,2,2,2];
+		var hand2 = [1,2,2,2];
+		var hand3 = [1];
+		expect(hand1.allValuesSame()).to.equal(true);
+		expect(hand2.allValuesSame()).to.equal(false);
+		expect(hand3.allValuesSame()).to.equal(true);
 	});
 	it("should return null array (Array prototype getFirstElementThat )", function() {
 		expect([1,2,3].getFirstElementThat(function(value){
