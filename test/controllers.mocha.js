@@ -259,6 +259,28 @@ describe('Palace Game: ', function() {
 		scope.player1.hand = [card1]
 		expect(scope.getCurrentHand()).to.deep.equal([card1]);
 	});
+	it("should set up 3 cards in each of 4 player's hand, palaces", inject(function($timeout) {
+		scope.startGame();
+	  	$timeout.flush();
+		var players = ['player1','player2','player3','player4'];
+		players.forEach(function(player){
+			expect(scope[player].hand.length).to.equal(3);
+			expect(scope[player].upp_palace.length).to.equal(3);
+			expect(scope[player].sec_palace.length).to.equal(3);
+		});
+	}));
+	it("should animate and unanimate drawing", inject(function($timeout) {
+		scope.startGame();
+	  	$timeout.flush();
+		var players = ['player1','player2','player3','player4'];
+		players.forEach(function(player){
+			expect(scope[player].isDrawing).to.equal(true);
+		});
+		$timeout.flush();
+		players.forEach(function(player){
+			expect(scope[player].isDrawing).to.equal(false);
+		});
+	}));
   });
   describe('Misc functions', function() {
 
