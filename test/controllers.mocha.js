@@ -14,7 +14,7 @@ describe('Palace Game: ', function() {
   describe('Aesthetics', function() {
 
 	beforeEach(function(){
-	})
+	});
 	afterEach(function() {
 	});
 
@@ -89,7 +89,7 @@ describe('Palace Game: ', function() {
   describe('Toggles', function() {
 
 	beforeEach(function(){
-	})
+	});
 	afterEach(function() {
 	});
 
@@ -145,7 +145,7 @@ describe('Palace Game: ', function() {
 
 	beforeEach(function(){
 		scope.startGame();
-	})
+	});
 	afterEach(function() {
 	});
 
@@ -229,7 +229,7 @@ describe('Palace Game: ', function() {
   describe('Gameplay', function() {
 
 	beforeEach(function(){
-	})
+	});
 	afterEach(function() {
 	});
 
@@ -281,11 +281,31 @@ describe('Palace Game: ', function() {
 			expect(scope[player].isDrawing).to.equal(false);
 		});
 	}));
+	it("should have no card in pile, any card is playable", inject(function($timeout) {
+		scope.startGame();
+	  	$timeout.flush();
+		$timeout.flush();
+		expect(scope.playable).to.deep.equal(scope.weakToStrong);
+	}));
+  });
+  describe('AI / Computer Player', function() {
+
+	beforeEach(inject(function($timeout){
+		scope.startGame();
+	  	$timeout.flush();
+		$timeout.flush();
+	}));
+	afterEach(function() {
+	});
+	it("should be able to do Swap Mode", inject(function($timeout) {
+	  	$timeout.flush();
+		$timeout.flush();
+	}));
   });
   describe('Misc functions', function() {
 
 	beforeEach(function(){
-	})
+	});
 	afterEach(function() {
 	});
 	it("should know all the ace or magic cards", function() {
