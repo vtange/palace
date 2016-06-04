@@ -324,6 +324,22 @@ describe('Palace Game: ', function() {
 	  	$timeout.flush();
 		$timeout.flush();
 	}));
+	it("should swap magic cards to Upper Palace", inject(function($timeout) {
+		//get number of magic cards on hand
+	  	$timeout.flush();
+		$timeout.flush();
+		//upp palace should have at most 3 magic cards
+	}));
+	it("should successfully swap 3 cards everytime", inject(function($timeout) {
+	  	$timeout.flush();
+		$timeout.flush();
+		expect(scope.player1.upp_palace.length).to.equal(3);
+	}));
+	it("should end up with 3 cards on hand", inject(function($timeout) {
+	  	$timeout.flush();
+		$timeout.flush();
+		expect(scope.player1.hand.length).to.equal(3);
+	}));
   });
   describe('Misc functions', function() {
 
