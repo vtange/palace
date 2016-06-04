@@ -281,12 +281,35 @@ describe('Palace Game: ', function() {
 			expect(scope[player].isDrawing).to.equal(false);
 		});
 	}));
-	it("should have no card in pile, any card is playable", inject(function($timeout) {
-		scope.startGame();
-	  	$timeout.flush();
-		$timeout.flush();
-		expect(scope.playable).to.deep.equal(scope.weakToStrong);
-	}));
+  	describe('Playable Cards', function() {
+		before(function(){
+			scope.startGame();
+			$timeout.flush();
+			$timeout.flush();
+		});
+		afterEach(function() {
+		});
+		it("should have no card in pile, any card is playable", inject(function($timeout) {
+			expect(scope.playable).to.deep.equal(scope.weakToStrong);
+		}));
+		it("playable cards check", inject(function($timeout) {
+			for(var i = 0; i<scope.weakToStrong.length;i++){
+				scope.cardToBeat = scope.weakToStrong[i];
+				if (scope.cardToBeat === 7){
+					expect(scope.playable).to.deep.equal([3,4,5,6,7,8,2,10]);
+				}
+				else if	(scope.cardToBeat === 8){
+					expect(scope.playable).to.deep.equal([9,11,12,13,1,7,8,2,10]);
+				}
+				else if	(scope.cardToBeat === 2||scope.cardToBeat === 10){
+					expect(scope.playable).to.deep.equal([3,4,5,6,9,11,12,13,1,7,8,2,10]);
+				}
+				else if (scope.cardToBeat !== null){
+					expect(scope.playable).to.deep.equal(scope.playable.slice(scope.playable.indexOf(scope.cardToBeat)));
+				}
+			}
+		}));
+	});
   });
   describe('AI / Computer Player', function() {
 
