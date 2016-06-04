@@ -340,6 +340,14 @@ describe('Palace Game: ', function() {
 		$timeout.flush();
 		expect(scope.player1.hand.length).to.equal(3);
 	}));
+	it("should select the weakest card playable everytime", inject(function($timeout) {
+	  	$timeout.flush();
+		$timeout.flush();
+		for(var i = 0; i<scope.playable.length;i++){
+			//find weakest card
+			//expect cardstoplay value to be weakest on hand, and is PLAYABLE
+		}
+	}));
   });
   describe('Misc functions', function() {
 
