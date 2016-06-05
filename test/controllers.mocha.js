@@ -324,11 +324,28 @@ describe('Palace Game: ', function() {
 	  	$timeout.flush();
 		$timeout.flush();
 	}));
-	it("should swap magic cards to Upper Palace", inject(function($timeout) {
-		//get number of magic cards on hand
-	  	$timeout.flush();
+	it("should always fill upper palace with magics before filling hand with magics", inject(function($timeout) {
+		$timeout.flush();
 		$timeout.flush();
 		//upp palace should have at most 3 magic cards
+		var numMagicsUpp = scope.player1.upp_palace.reduce(function(magics,card){
+			if(scope.isMagicOrAce(card.value)){
+				magics.push(card);
+			}
+			return magics;
+		},[]).length;
+		var numMagicsHnd = scope.player1.hand.reduce(function(magics,card){
+			if(scope.isMagicOrAce(card.value)){
+				magics.push(card);
+			}
+			return magics;
+		},[]).length;
+		if(numMagicsUpp<3){
+			expect(numMagicsHnd).to.equal(0);
+		}
+		else{
+			expect(numMagicsHnd).to.be.below(4);
+		}
 	}));
 	it("should successfully swap 3 cards everytime", inject(function($timeout) {
 	  	$timeout.flush();
@@ -340,13 +357,21 @@ describe('Palace Game: ', function() {
 		$timeout.flush();
 		expect(scope.player1.hand.length).to.equal(3);
 	}));
-	it("should select the weakest card playable everytime", inject(function($timeout) {
+	it("should always play a playable card", inject(function($timeout) {
 	  	$timeout.flush();
 		$timeout.flush();
-		for(var i = 0; i<scope.playable.length;i++){
-			//find weakest card
-			//expect cardstoplay value to be weakest on hand, and is PLAYABLE
-		}
+		expect(scope.playable.indexOf(scope.cardsToPlay.value)).to.not.equal(-1);
+	}));
+  });
+  describe('Human Player', function() {
+
+	beforeEach(inject(function($timeout){
+		scope.nextPlayer = 3;
+		scope.runNextTurn();
+	}));
+	afterEach(function() {
+	});
+	it("should be able to do Swap Mode", inject(function($timeout) {
 	}));
   });
   describe('Misc functions', function() {
