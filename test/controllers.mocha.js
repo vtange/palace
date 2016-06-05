@@ -317,16 +317,14 @@ describe('Palace Game: ', function() {
 		scope.startGame();
 	  	$timeout.flush();
 		$timeout.flush();
+		$timeout.flush();
+		$timeout.flush();
 	}));
 	afterEach(function() {
 	});
-	it("should be able to do Swap Mode", inject(function($timeout) {
-	  	$timeout.flush();
-		$timeout.flush();
-	}));
-	it("should always fill upper palace with magics before filling hand with magics", inject(function($timeout) {
-		$timeout.flush();
-		$timeout.flush();
+	it("should be able to do Swap Mode", function() {
+	});
+	it("should always fill upper palace with magics before filling hand with magics", function() {
 		//upp palace should have at most 3 magic cards
 		var numMagicsUpp = scope.player1.upp_palace.reduce(function(magics,card){
 			if(scope.isMagicOrAce(card.value)){
@@ -346,32 +344,49 @@ describe('Palace Game: ', function() {
 		else{
 			expect(numMagicsHnd).to.be.below(4);
 		}
-	}));
-	it("should successfully swap 3 cards everytime", inject(function($timeout) {
-	  	$timeout.flush();
-		$timeout.flush();
+	});
+	it("should successfully swap 3 cards everytime", function() {
 		expect(scope.player1.upp_palace.length).to.equal(3);
-	}));
-	it("should end up with 3 cards on hand", inject(function($timeout) {
-	  	$timeout.flush();
-		$timeout.flush();
+	});
+	it("should end up with 3 cards on hand", function() {
 		expect(scope.player1.hand.length).to.equal(3);
-	}));
-	it("should always play a playable card", inject(function($timeout) {
-	  	$timeout.flush();
-		$timeout.flush();
+	});
+	it("should always play a playable card", function() {
 		expect(scope.playable.indexOf(scope.cardsToPlay.value)).to.not.equal(-1);
-	}));
+	});
+	  /*PUT ON PLAY CARDS test
+	it("should no longer be player1's first turn / disable swap mode for player 1", inject(function($timeout) {
+		expect(scope.player1.first).to.not.equal(false);
+	}));*/
   });
   describe('Human Player', function() {
 
 	beforeEach(inject(function($timeout){
 		scope.nextPlayer = 3;
 		scope.runNextTurn();
+		$timeout.flush();
 	}));
 	afterEach(function() {
 	});
-	it("should be able to do Swap Mode", inject(function($timeout) {
+	it("should be waiting for player input", function() {
+		expect(scope.waitingForInput).to.equal(true);
+	});
+  });
+  describe('Post-first turn', function() {
+
+	beforeEach(inject(function($timeout){
+		var players = ['player1','player2','player3','player4'];
+		players.forEach(function(player){
+			scope[player].first = true;
+		});
+		scope.runNextTurn();
+	}));
+	afterEach(function() {
+	});
+	it("should skip swapmode", inject(function($timeout) {
+		sinon.stub(scope, 'enterSwapMode', function() {});
+		$timeout.flush();
+		expect(scope.enterSwapMode.callCount).to.equal(0);
 	}));
   });
   describe('Misc functions', function() {
