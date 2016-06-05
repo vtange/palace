@@ -282,30 +282,30 @@ describe('Palace Game: ', function() {
 		});
 	}));
   	describe('Playable Cards', function() {
-		before(function(){
+		beforeEach(inject(function($timeout){
 			scope.startGame();
 			$timeout.flush();
 			$timeout.flush();
-		});
+		}));
 		afterEach(function() {
 		});
-		it("should have no card in pile, any card is playable", inject(function($timeout) {
+		it("should have no card in pile, any card is playable", function() {
 			expect(scope.playable).to.deep.equal(scope.weakToStrong);
-		}));
+		});
 		it("playable cards check", inject(function($timeout) {
 			for(var i = 0; i<scope.weakToStrong.length;i++){
 				scope.cardToBeat = scope.weakToStrong[i];
 				if (scope.cardToBeat === 7){
-					expect(scope.playable).to.deep.equal([3,4,5,6,7,8,2,10]);
+					expect(scope.getPlayables(scope.cardToBeat)).to.deep.equal([3,4,5,6,7,8,2,10]);
 				}
 				else if	(scope.cardToBeat === 8){
-					expect(scope.playable).to.deep.equal([9,11,12,13,1,7,8,2,10]);
+					expect(scope.getPlayables(scope.cardToBeat)).to.deep.equal([9,11,12,13,1,7,8,2,10]);
 				}
 				else if	(scope.cardToBeat === 2||scope.cardToBeat === 10){
-					expect(scope.playable).to.deep.equal([3,4,5,6,9,11,12,13,1,7,8,2,10]);
+					expect(scope.getPlayables(scope.cardToBeat)).to.deep.equal([3,4,5,6,9,11,12,13,1,7,8,2,10]);
 				}
 				else if (scope.cardToBeat !== null){
-					expect(scope.playable).to.deep.equal(scope.playable.slice(scope.playable.indexOf(scope.cardToBeat)));
+					expect(scope.getPlayables(scope.cardToBeat)).to.deep.equal(scope.playable.slice(scope.playable.indexOf(scope.cardToBeat)));
 				}
 			}
 		}));

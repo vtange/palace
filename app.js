@@ -406,7 +406,21 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 			},playerAppearTime);
 		});
 	};
-
+	$scope.getPlayables = function(cardToBeat){
+			if (cardToBeat === 7){
+				return [3,4,5,6,7,8,2,10];
+			}
+			else if	(cardToBeat === 8){
+				return [9,11,12,13,1,7,8,2,10];
+			}
+			else if	(cardToBeat === 2||cardToBeat === 10){
+				return [3,4,5,6,9,11,12,13,1,7,8,2,10];
+			}
+			else if (cardToBeat !== null){
+				return $scope.playable.slice($scope.playable.indexOf(cardToBeat));
+			}
+		return [3,4,5,6,9,11,12,13,1,7,8,2,10];
+	}
 	//runs turn of current player, gets card to beat and calcs rules
 	$scope.runNextTurn = function(){
 		
@@ -418,19 +432,7 @@ app.controller('MainCtrl', ['$scope', '$q', '$timeout', 'DATASTORE', function($s
 		
 			//get playables (cards that don't trigger forfeit)
 			//weakest ---> strongest
-			$scope.playable = [3,4,5,6,9,11,12,13,1,7,8,2,10];
-			if (cardToBeat === 7){
-				$scope.playable = [3,4,5,6,7,8,2,10];
-			}
-			else if	(cardToBeat === 8){
-				$scope.playable = [9,11,12,13,1,7,8,2,10];
-			}
-			else if	(cardToBeat === 2||cardToBeat === 10){
-				$scope.playable = [3,4,5,6,9,11,12,13,1,7,8,2,10];
-			}
-			else if (cardToBeat !== null){
-				$scope.playable = $scope.playable.slice($scope.playable.indexOf(cardToBeat));
-			}
+			$scope.playable = $scope.getPlayables(cardToBeat);
 
 		//set player and hand, show hand
 		var player = $scope.getCurrentPlayer();
