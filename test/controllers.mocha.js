@@ -3,7 +3,7 @@ describe('Palace Game: ', function() {
   var scope;
   var ctrl;
 
-  beforeEach(module('palace-game'));
+  beforeEach(module('palace-game')); //https://github.com/angular/angular.js/issues/7056
 
   beforeEach(inject(function($rootScope, $controller) {
     scope = $rootScope.$new();
